@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import harryPotter.Book;
+import harryPotter.BookBuilder;
 
 public class TestHarryPotter {
 
@@ -20,5 +21,15 @@ public class TestHarryPotter {
         Book book2 = new Book("H1", 8, 2);
         assertEquals(book1, book2);
     }
-
+    
+    @Test
+    public void createBookWithBuilder() {
+        Book book1 = new BookBuilder()
+                            .setName("H1")
+                            .setPrice(8d)
+                            .setStock(2)
+                            .build();
+        Book book2 = new Book("H1", 8, 2);
+        assertEquals(book1, book2);
+    }
 }
