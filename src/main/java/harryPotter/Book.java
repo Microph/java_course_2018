@@ -3,6 +3,10 @@ package harryPotter;
 public class Book {
     private String name;
     private double price;
+    public double getPrice() {
+        return price;
+    }
+
     private int stock;
     
     public Book(String name, double price, int stock) {

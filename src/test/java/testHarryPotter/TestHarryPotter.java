@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import harryPotter.Book;
 import harryPotter.BookBuilder;
+import harryPotter.BookItem;
+import harryPotter.Order;
 
 public class TestHarryPotter {
 
@@ -32,4 +34,19 @@ public class TestHarryPotter {
         Book book2 = new Book("H1", 8, 2);
         assertEquals(book1, book2);
     }
+    
+    @Test
+    public void createEmptyOrder() {
+        Book book1 = new Book("H1", 8, 2);
+        BookItem bookItem = new BookItem(book1, 1);
+        Order order = new Order();
+        order.addItem(bookItem);
+        order.process();
+        
+        assertEquals(1, order.getBookAmount());
+        assertEquals(8, order.getTotalPrice(), 2);
+        assertEquals(0, order.getDiscount(), 2);
+        assertEquals(8, order.getNetPrice(), 2);
+    }
+
 }
