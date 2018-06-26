@@ -1,14 +1,22 @@
 package harryPotter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Order {
-    private BookItem bookItem;
+    private List<BookItem> bookItemList = new ArrayList<BookItem>();
     private double totalPrice;
     private double netPrice;
     private double discount;
 
     public int getBookAmount() {
         // TODO Auto-generated method stub
-        return bookItem.quantity;
+        int amount = 0;
+        for (BookItem aBookItem : bookItemList) {
+            amount += aBookItem.getQuantity();
+        }
+        
+        return amount;
     }
 
     public double getTotalPrice() {
@@ -28,13 +36,19 @@ public class Order {
 
     public void addItem(BookItem bookItem) {
         // TODO Auto-generated method stub
-        this.bookItem = bookItem;
+        this.bookItemList.add(bookItem);
     }
 
     public void process() {
-        // TODO IMPLEMENT THEM
-        this.totalPrice = bookItem.getBook().getPrice();
+        double tempTotalPrice = 0;
+        for (BookItem bookItem : bookItemList) {
+            tempTotalPrice += bookItem.getBook().getPrice();
+        }
+        this.totalPrice = tempTotalPrice;
+        
+        // TODO Implement discount calculation
         this.discount = 0;
+        
         this.netPrice = getTotalPrice() - getDiscount();
     }
 

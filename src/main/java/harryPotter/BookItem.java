@@ -7,6 +7,9 @@ public class BookItem {
     }
 
     int quantity;
+    public int getQuantity() {
+        return quantity;
+    }
     
     public BookItem(Book book, int quantity) {
         this.book = book;

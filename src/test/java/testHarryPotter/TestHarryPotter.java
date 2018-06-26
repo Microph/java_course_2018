@@ -43,10 +43,10 @@ public class TestHarryPotter {
         order.addItem(bookItem);
         order.process();
         
-        assertEquals(1, order.getBookAmount());
-        assertEquals(8, order.getTotalPrice(), 2);
-        assertEquals(0, order.getDiscount(), 2);
-        assertEquals(8, order.getNetPrice(), 2);
+        assertEquals(2, order.getBookAmount());
+        assertEquals(16, order.getTotalPrice(), 2);
+        assertEquals(16 * 0.05, order.getDiscount(), 2);
+        assertEquals(16 - (16 * 0.05), order.getNetPrice(), 2);
     }
 
 }
