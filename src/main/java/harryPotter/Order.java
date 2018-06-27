@@ -4,19 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    private List<BookItem> bookItemList = new ArrayList<BookItem>();
-    private double totalPrice;
-    private double netPrice;
-    private double discount;
+    private List<BookItem> bookItemList = new ArrayList<BookItem>(); //bookItem เป็น data structure แสดงหนังสือทั้งหมดที่คนๆ นึงสั่งซื้อ
+    private int bookAmount; //ได้หลัง process
+    private double totalPrice; //ได้หลัง process
+    private double netPrice; //ได้หลัง process
+    private double discount; //ได้หลัง process
 
     public int getBookAmount() {
         // TODO Auto-generated method stub
-        int amount = 0;
-        for (BookItem aBookItem : bookItemList) {
-            amount += aBookItem.getQuantity();
-        }
-        
-        return amount;
+        return bookAmount;
     }
 
     public double getTotalPrice() {
@@ -40,16 +36,80 @@ public class Order {
     }
 
     public void process() {
-        double tempTotalPrice = 0;
-        for (BookItem bookItem : bookItemList) {
-            tempTotalPrice += bookItem.getBook().getPrice();
+        //calculate book amount
+        this.bookAmount = 0;
+        for (BookItem aBookItem : bookItemList) {
+            this.bookAmount += aBookItem.getQuantity();
         }
-        this.totalPrice = tempTotalPrice;
         
-        // TODO Implement discount calculation
-        this.discount = 0;
+        //calculate total price
+        this.totalPrice = 0;
+        for (BookItem bookItem : bookItemList) {
+            this.totalPrice += bookItem.getTotalPrice();
+        }
         
-        this.netPrice = getTotalPrice() - getDiscount();
+        //calculate best discount possible
+        this.discount = calculateBestDiscount();
+        
+        //calculate net price
+        this.netPrice = this.totalPrice - this.discount;
+    }
+
+    public double calculateBestDiscount() {
+        //arrange books into new structure
+        List<BookPackForDiscountCalculation> bookPacksForDiscountCalculation = new ArrayList<>();
+        while(hasBooksLeft()) {
+            BookPackForDiscountCalculation newBookDiscountPack = new BookPackForDiscountCalculation();
+            for (BookItem bookItem : bookItemList) {
+                if(bookItem.getQuantity() > 0) {
+                    bookItem.setQuantity(bookItem.getQuantity() - 1);
+                    newBookDiscountPack.addBook(bookItem.getBook());
+                }
+            }
+            bookPacksForDiscountCalculation.add(newBookDiscountPack);
+        }
+        
+        //try to change any 5-3 pair to 4-4 pair
+        List<BookPackForDiscountCalculation> threeBookPacks = new ArrayList<>();
+        List<BookPackForDiscountCalculation> fiveBookPacks = new ArrayList<>();
+        for(BookPackForDiscountCalculation bookPack : bookPacksForDiscountCalculation) {
+            if(bookPack.getBookListSize() == 3) {
+                threeBookPacks.add(bookPack);
+            }
+            else if(bookPack.getBookListSize() == 5) {
+                fiveBookPacks.add(bookPack);
+            }
+        }
+        
+        for(BookPackForDiscountCalculation packToBeAdded : threeBookPacks) {
+            if(fiveBookPacks.isEmpty()) {
+                break;
+            }
+            
+            BookPackForDiscountCalculation packToBeRemoved = fiveBookPacks.get(0);
+            fiveBookPacks.remove(packToBeRemoved);
+            for (Book bookFromFivePack : packToBeRemoved.getBookList()) {
+                if(!packToBeAdded.getBookList().contains(bookFromFivePack)) {
+                    packToBeRemoved.getBookList().remove(bookFromFivePack);
+                    packToBeAdded.getBookList().add(bookFromFivePack);
+                }
+            }
+        }
+        
+        double totalDiscount = 0;
+        for (BookPackForDiscountCalculation pack : bookPacksForDiscountCalculation) {
+            totalDiscount += pack.getDiscount();
+        }
+        
+        return totalDiscount;
+    }
+    
+    private boolean hasBooksLeft() {
+        for (BookItem bookItem : bookItemList) {
+            if(bookItem.getQuantity() > 0)
+                return true;
+        }
+        return false;
     }
 
 }

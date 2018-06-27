@@ -1,13 +1,13 @@
 package harryPotter;
 
 public class Book {
-    private String name;
-    private double price;
+    private String name; //ชื่อหนังสือ
+    private double price; //ราคา ซึ่งเท่ากับ 8 เสมอตามโจทย์
+    private int stock; //จำนวนที่มีในร้าน
+    
     public double getPrice() {
         return price;
     }
-
-    private int stock;
     
     public Book(String name, double price, int stock) {
         super();
@@ -16,7 +16,8 @@ public class Book {
         this.stock = stock;
     }
 
-    public static Book CreateHarryPotter1() {
+    //NOT USED
+    /*public static Book CreateHarryPotter1() {
         // TODO Auto-generated method stub
         return new Book("H1", 8, 2);
     }
@@ -24,5 +25,5 @@ public class Book {
     public static Book CreateHarryPotter2() {
         // TODO Auto-generated method stub
         return new Book("H2", 8, 2);
-    }
+    }*/
 }
