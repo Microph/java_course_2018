@@ -5,6 +5,10 @@ public class Book {
     private double price; //ราคา ซึ่งเท่ากับ 8 เสมอตามโจทย์
     private int stock; //จำนวนที่มีในร้าน
     
+    public String getName() {
+        return name;
+    }
+    
     public int getStock() {
         return stock;
     }

@@ -32,6 +32,12 @@ public class Order {
 
     public void addItem(BookItem bookItem) {
         // TODO Auto-generated method stub
+        for (BookItem previousBookItem : this.bookItemList) {
+            if(previousBookItem.getBookName().equals(bookItem.getBookName())) {
+                previousBookItem.setQuantity(previousBookItem.getQuantity() + bookItem.getQuantity());
+                return;
+            }
+        }
         this.bookItemList.add(bookItem);
     }
 
@@ -59,14 +65,14 @@ public class Order {
         //arrange books into new structure
         List<BookPackForDiscountCalculation> bookPacksForDiscountCalculation = new ArrayList<>();
         while(hasBooksLeft()) {
-            BookPackForDiscountCalculation newBookDiscountPack = new BookPackForDiscountCalculation();
+            BookPackForDiscountCalculation tempBookPack = new BookPackForDiscountCalculation();
             for (BookItem bookItem : bookItemList) {
                 if(bookItem.getQuantity() > 0) {
                     bookItem.setQuantity(bookItem.getQuantity() - 1);
-                    newBookDiscountPack.addBook(bookItem.getBook());
+                    tempBookPack.addBook(bookItem.getBook());
                 }
             }
-            bookPacksForDiscountCalculation.add(newBookDiscountPack);
+            bookPacksForDiscountCalculation.add(tempBookPack);
         }
         
         //try to change any 5-3 pair to 4-4 pair
