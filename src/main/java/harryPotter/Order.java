@@ -108,11 +108,13 @@ public class Order {
         for (BookPackForDiscountCalculation pack : bookPacksForDiscountCalculation) {
             totalDiscount += pack.getDiscount();
             //Debug print packagings
-            /*for (Book book : pack.getBookList()) {
+            /*System.out.print("-> ");
+            for (Book book : pack.getBookList()) {
                 System.out.print(book.getName() + ", ");
             }
             System.out.println();*/
         }
+        //System.out.println();
 
         return totalDiscount;
     }
