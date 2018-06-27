@@ -1,6 +1,7 @@
 package harryPotter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Order {
@@ -102,12 +103,17 @@ public class Order {
                 }
             }
         }
-        
+
         double totalDiscount = 0;
         for (BookPackForDiscountCalculation pack : bookPacksForDiscountCalculation) {
             totalDiscount += pack.getDiscount();
+            //Debug print packagings
+            /*for (Book book : pack.getBookList()) {
+                System.out.print(book.getName() + ", ");
+            }
+            System.out.println();*/
         }
-        
+
         return totalDiscount;
     }
     
