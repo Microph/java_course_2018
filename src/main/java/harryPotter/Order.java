@@ -98,6 +98,7 @@ public class Order {
                 if(!packToBeAdded.getBookList().contains(bookFromFivePack)) {
                     packToBeRemoved.getBookList().remove(bookFromFivePack);
                     packToBeAdded.getBookList().add(bookFromFivePack);
+                    break;
                 }
             }
         }
