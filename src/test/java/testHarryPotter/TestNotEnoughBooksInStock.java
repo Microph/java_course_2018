@@ -4,7 +4,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import exceptionDemo.IllegalDivisionException;
 import harryPotter.Book;
 import harryPotter.BookItem;
 import harryPotter.NotEnoughBooksInStockException;

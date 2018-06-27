@@ -4,8 +4,6 @@ import org.junit.Test;
 
 import harryPotter.Book;
 import harryPotter.BookBuilder;
-import harryPotter.BookItem;
-import harryPotter.Order;
 
 public class TestHarryPotterBookConstructor {
 
