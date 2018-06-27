@@ -16,7 +16,11 @@ public class BookItem {
         this.quantity = quantity;
     }
     
-    public BookItem(Book book, int quantity) {
+    public BookItem(Book book, int quantity) throws NotEnoughBooksInStockException {
+        if(book.getStock() < quantity) {
+            throw new NotEnoughBooksInStockException();
+        }
+        book.setStock(book.getStock() - quantity);
         this.book = book;
         this.quantity = quantity;
     }

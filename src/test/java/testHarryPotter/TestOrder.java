@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import harryPotter.Book;
 import harryPotter.BookItem;
+import harryPotter.NotEnoughBooksInStockException;
 import harryPotter.Order;
 
 public class TestOrder {
@@ -14,9 +15,18 @@ public class TestOrder {
         Book book1 = new Book("H1", 8, 2);
         Book book2 = new Book("H2", 8, 2);
         Book book3 = new Book("H3", 8, 2);
-        BookItem bookItem1 = new BookItem(book1, 1);
-        BookItem bookItem2 = new BookItem(book2, 1);
-        BookItem bookItem3 = new BookItem(book3, 1);
+        BookItem bookItem1;
+        BookItem bookItem2;
+        BookItem bookItem3;
+        try {
+            bookItem1 = new BookItem(book1, 1);
+            bookItem2 = new BookItem(book2, 1);
+            bookItem3 = new BookItem(book3, 1);
+        } catch (NotEnoughBooksInStockException e) {
+            // TODO Auto-generated catch block
+            fail("Should not be here!");
+            return;
+        }
         Order order = new Order();
         order.addItem(bookItem1);
         order.addItem(bookItem2);
@@ -34,8 +44,15 @@ public class TestOrder {
     public void createOrderWithTwoBook() {
         Book book1 = new Book("H1", 8, 2);
         Book book2 = new Book("H2", 8, 2);
-        BookItem bookItem1 = new BookItem(book1, 1);
-        BookItem bookItem2 = new BookItem(book2, 1);
+        BookItem bookItem1;
+        BookItem bookItem2;
+        try {
+            bookItem1 = new BookItem(book1, 1);
+            bookItem2 = new BookItem(book2, 1);
+        } catch (NotEnoughBooksInStockException e) {
+            fail("Should not be here!");
+            return;
+        }
         Order order = new Order();
         order.addItem(bookItem1);
         order.addItem(bookItem2);
@@ -50,7 +67,13 @@ public class TestOrder {
     @Test
     public void createOrderWithOneBook() {
         Book book1 = new Book("H1", 8, 2);
-        BookItem bookItem = new BookItem(book1, 1);
+        BookItem bookItem;
+        try {
+            bookItem = new BookItem(book1, 1);
+        } catch (NotEnoughBooksInStockException e) {
+            fail("Should not be here!");
+            return;
+        }
         Order order = new Order();
         order.addItem(bookItem);
         order.process();

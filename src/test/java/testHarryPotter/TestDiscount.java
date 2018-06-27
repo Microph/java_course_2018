@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import harryPotter.Book;
 import harryPotter.BookItem;
+import harryPotter.NotEnoughBooksInStockException;
 import harryPotter.Order;
 
 public class TestDiscount {
@@ -17,11 +18,21 @@ public class TestDiscount {
         Book book3 = new Book("H3", 8, 2);
         Book book4 = new Book("H4", 8, 1);
         Book book5 = new Book("H5", 8, 1);
-        BookItem bookItem1 = new BookItem(book1, 2);
-        BookItem bookItem2 = new BookItem(book2, 2);
-        BookItem bookItem3 = new BookItem(book3, 2);
-        BookItem bookItem4 = new BookItem(book4, 1);
-        BookItem bookItem5 = new BookItem(book5, 1);
+        BookItem bookItem1;
+        BookItem bookItem2;
+        BookItem bookItem3;
+        BookItem bookItem4;
+        BookItem bookItem5;
+        try {
+            bookItem1 = new BookItem(book1, 2);
+            bookItem2 = new BookItem(book2, 2);
+            bookItem3 = new BookItem(book3, 2);
+            bookItem4 = new BookItem(book4, 1);
+            bookItem5 = new BookItem(book5, 1);
+        } catch (NotEnoughBooksInStockException e) {
+            fail("Should not be here!");
+            return;
+        }
         Order order = new Order();
         order.addItem(bookItem1);
         order.addItem(bookItem2);

@@ -5,6 +5,14 @@ public class Book {
     private double price; //ราคา ซึ่งเท่ากับ 8 เสมอตามโจทย์
     private int stock; //จำนวนที่มีในร้าน
     
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     public double getPrice() {
         return price;
     }
