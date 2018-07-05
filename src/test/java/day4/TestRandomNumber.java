@@ -16,8 +16,7 @@ public class TestRandomNumber {
 
 }
 
-class Random5 extends Random{
-    @Override
+class Random5 implements DemoRandom{
     public int nextInt(int bound) {
         return 5;
     }

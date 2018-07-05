@@ -1,10 +1,8 @@
 package day4;
 
-import java.util.Random;
-
 public class RandomNumberGen {
 
-    public int generateRandomNumber(Random rand) {
+    public int generateRandomNumber(DemoRandom rand) {
         return rand.nextInt(10);
     }
 
