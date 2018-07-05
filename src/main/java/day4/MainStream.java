@@ -9,7 +9,17 @@ import java.util.stream.Stream;
 public class MainStream {
     public static void main(String[] args) {
         MainStream p = new MainStream();
-        p.start();
+        //p.start();
+        p.startWithParallel();
+    }
+
+    private void startWithParallel() {
+        List<String> list = new ArrayList<>();
+        list.add("One");
+        list.add("Two");
+        list.add("Three");
+        list.stream().forEach(System.out::println);
+        list.parallelStream().forEach(System.out::println); //Not wait for the sequential codes
     }
 
     private void start() {
