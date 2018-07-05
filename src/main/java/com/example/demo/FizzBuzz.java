@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 public class FizzBuzz {   
     private List<Condition> conditionList;
     
@@ -15,8 +17,8 @@ public class FizzBuzz {
 				return condition.say();
 			}
 		}
-		
-		return String.valueOf(input);
+
+		throw new RuntimeException("Condition not match!");
 	}
 	
 	public void setupConditionList() {
@@ -25,6 +27,7 @@ public class FizzBuzz {
 	    conditionList.add(new FizzCondition());
 	    conditionList.add(new BuzzCondition());
 	    conditionList.add(new KBTGCondition());
+	    conditionList.add(new BaseCondition());
 	    
 	    Collections.sort(conditionList, new Comparator<Condition>(){
             @Override
