@@ -27,8 +27,11 @@ public class MainSorting {
             }
         });*/
         
-        //2nd approach
-        Collections.sort(employees, new EmployeeSort());
+        //Lambda approach
+        Comparator<Employee> withLambda = (Employee e1, Employee e2) -> e1.getName().compareTo(e2.getName());
+        
+        //Collections.sort(employees, new EmployeeSort());
+        Collections.sort(employees, withLambda);
         
         employees.forEach(System.out::println);
     }
@@ -36,9 +39,9 @@ public class MainSorting {
     //Using implemented class is more recommended
     private class EmployeeSort implements Comparator<Employee>{
         @Override
-        public int compare(Employee arg0, Employee arg1) {
+        public int compare(Employee e1, Employee e2) {
             // TODO Auto-generated method stub
-            return 0;
+            return e1.getName().compareTo(e2.getName());
         }
     }
         
