@@ -15,7 +15,7 @@ public class BuzzCondition implements Condition {
     }
 
     @Override
-    public String say() {
+    public String say(int input) {
         // TODO Auto-generated method stub
         return "Buzz";
     }

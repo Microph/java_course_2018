@@ -14,7 +14,7 @@ public class FizzBuzz {
 	    setupConditionList();
 		for(Condition condition : conditionList) {
 			if(condition.check(input)) {
-				return condition.say();
+				return condition.say(input);
 			}
 		}
 

@@ -1,8 +1,6 @@
 package com.example.demo;
 
 public class BaseCondition implements Condition {
-    private int input;
-    
     @Override
     public int getIntCheck() {
         // TODO Auto-generated method stub
@@ -12,14 +10,13 @@ public class BaseCondition implements Condition {
     @Override
     public boolean check(int input) {
         // TODO Auto-generated method stub
-        this.input = input;
         return true;
     }
 
     @Override
-    public String say() {
+    public String say(int input) {
         // TODO Auto-generated method stub
-        return String.valueOf(this.input);
+        return String.valueOf(input);
     }
 
 }
