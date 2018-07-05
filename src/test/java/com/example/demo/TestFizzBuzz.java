@@ -43,7 +43,7 @@ public class TestFizzBuzz {
 	@Test
 	public void test7(){
 		FizzBuzz fizzBuzz = new FizzBuzz();
-		assertEquals("7", fizzBuzz.test(7));  
+		assertEquals("KBTG", fizzBuzz.test(7));  
 	}
 	
 	@Test
