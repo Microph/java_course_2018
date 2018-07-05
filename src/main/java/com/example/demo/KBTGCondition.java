@@ -1,21 +1,23 @@
 package com.example.demo;
 
-public class FizzBuzzCondition implements Condition {
+public class KBTGCondition implements Condition {
+
     @Override
     public int getIntCheck() {
-        return 15;
+        // TODO Auto-generated method stub
+        return 7;
     }
 
     @Override
     public boolean check(int input) {
         // TODO Auto-generated method stub
-        return input%15 == 0;
+        return input%7==0;
     }
 
     @Override
     public String say() {
         // TODO Auto-generated method stub
-        return "FizzBuzz";
+        return "KBTG";
     }
-  
+
 }

@@ -6,13 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 
 public class FizzBuzz {   
-    private List<FizzBuzzCondition> conditionList;
+    private List<Condition> conditionList;
     
 	public String test(int input) {
 	    setupConditionList();
-		for(FizzBuzzCondition condition : conditionList) {
-			if(input%condition.getIntCheck() == 0) {
-				return condition.getPairedOutput();
+		for(Condition condition : conditionList) {
+			if(condition.check(input)) {
+				return condition.say();
 			}
 		}
 		
@@ -21,14 +21,14 @@ public class FizzBuzz {
 	
 	public void setupConditionList() {
 	    conditionList = new ArrayList<>();
-	    conditionList.add(new FizzBuzzCondition(15, "FizzBuzz"));
-	    conditionList.add(new FizzBuzzCondition(3, "Fizz"));
-	    conditionList.add(new FizzBuzzCondition(5, "Buzz"));
-	    conditionList.add(new FizzBuzzCondition(7, "KBTG"));
+	    conditionList.add(new FizzBuzzCondition());
+	    conditionList.add(new FizzCondition());
+	    conditionList.add(new BuzzCondition());
+	    conditionList.add(new KBTGCondition());
 	    
-	    Collections.sort(conditionList, new Comparator<FizzBuzzCondition>(){
+	    Collections.sort(conditionList, new Comparator<Condition>(){
             @Override
-            public int compare(FizzBuzzCondition c1, FizzBuzzCondition c2) {
+            public int compare(Condition c1, Condition c2) {
                 return c2.getIntCheck() - c1.getIntCheck();
             }
 	        
