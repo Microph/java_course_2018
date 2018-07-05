@@ -8,18 +8,13 @@ public class AbbreviationGen {
 
     public String generateAbbreviation(String string) {
         String[] splittedStrings = string.split(" ");
-        List<String> outList = Arrays.stream(splittedStrings)
+        String out = Arrays.stream(splittedStrings)
             .map(String::toLowerCase)
             .filter(str -> str.compareTo("of") != 0)
             .filter(str -> str.compareTo("by") != 0)
             .map(str -> str.substring(0, 1))
             .map(String::toUpperCase)
-            .collect(Collectors.toList());
-        
-        String out = "";
-        for (String str : outList) {
-            out += str;
-        }
+            .collect(Collectors.joining( "" ));
         
         return out;
     }
