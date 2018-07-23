@@ -38,9 +38,14 @@ public class OXGame {
         return turnOwner;
     }
 
-    public void playWith(Player player1, int i, int j) {
-        tables[i][j] = player1.getPlayingSymbol();
-        turnOwner = (turnOwner == player1) ? player2: player1;
+    public void playWith(Player player, int i, int j) {
+        tables[i][j] = player.getPlayingSymbol();
+        if(player == player1) {
+            turnOwner = player2;
+        }
+        else {
+            turnOwner = player1;
+        }
     }
     
     public boolean hasMovesLeft() {
@@ -79,7 +84,7 @@ public class OXGame {
                 if(tableIndex(i, j).equals("X")) {
                     _XCounter++; 
                 }
-                else {
+                else if(_OCounter == 3){
                     _OCounter++;
                 }
             }
@@ -100,7 +105,7 @@ public class OXGame {
                 if(tableIndex(j, i).equals("X")) {
                     _XCounter++; 
                 }
-                else {
+                else if(_OCounter == 3){
                     _OCounter++;
                 }
             }

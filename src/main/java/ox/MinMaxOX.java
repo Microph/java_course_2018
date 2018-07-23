@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class MinMaxOX {
-    public MoveIndexNode getNextBestMove(OXGame game) {
+    public static MoveIndexNode getNextBestMove(OXGame game) {
         //get all next possible moves
         List<MoveIndexNode> allNextPossibleMoves = getAllNextPossibleMoves(game);
         
@@ -36,10 +36,10 @@ public class MinMaxOX {
         
         //randomly return one of those
         Random randInt = new Random();
-        return bestMoves.get(randInt.nextInt(bestMoves.size() - 1));
+        return bestMoves.get(randInt.nextInt(bestMoves.size()));
     }
     
-    private List<MoveIndexNode> getAllNextPossibleMoves(OXGame game) {
+    private static List<MoveIndexNode> getAllNextPossibleMoves(OXGame game) {
         List<MoveIndexNode> nextPossibleMoves = new ArrayList<MoveIndexNode>();
         for(int i=0; i<3; i++) {
             for(int j=0; j<3; j++) {
@@ -52,8 +52,8 @@ public class MinMaxOX {
         return nextPossibleMoves;
     }
 
-    public int performMinMax(OXGame game) {
-        if(!game.hasMovesLeft()) {
+    public static int performMinMax(OXGame game) {
+        if(!game.hasMovesLeft() || evaluateTableScore(game) != 0) {
             return evaluateTableScore(game);
         }
         
@@ -78,7 +78,7 @@ public class MinMaxOX {
         return maxScore;
     }
     
-    public int evaluateTableScore(OXGame game) {
+    public static int evaluateTableScore(OXGame game) {
         int boardState = game.determineBoardState();
         if(game.getTurnOwner().getPlayingSymbol() == "X") {
             return boardState;
