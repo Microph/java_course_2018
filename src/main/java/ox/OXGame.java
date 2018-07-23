@@ -1,5 +1,7 @@
 package ox;
 
+import java.util.Random;
+
 public class OXGame {
     private String[][] tables;
     private Player player1, player2;
@@ -12,9 +14,17 @@ public class OXGame {
                 tables[i][j] = "";
             }
         }
+
+        int computerPlayerOrder = new Random().nextInt(2);
+        if(computerPlayerOrder == 1){
+            player1 = new HumanPlayer("X");
+            player2 = new ComputerPlayer("O");
+        }
+        else {
+        	player1 = new ComputerPlayer("X");
+            player2 = new HumanPlayer("O");
+        }
         
-        player1 = new Player("X");
-        player2 = new Player("O");
         turnOwner = player1;
     }
 
@@ -60,22 +70,21 @@ public class OXGame {
         return false;
     }
 
-    //-1:   O LOSE
-    //0:    DRAW
-    //1:    O WIN
+    //1:	O WIN
+    //0:	DRAW
+    //-1:	O LOSE
     public int determineBoardState() {
         //Cross Check
-        if((tableIndex(0, 0).equals("X") && tableIndex(1, 1).equals("X") && tableIndex(2, 2).equals("X")) ||
-           (tableIndex(0, 2).equals("X") && tableIndex(1, 1).equals("X") && tableIndex(2, 0).equals("X"))) {
+    	if( (tableIndex(0, 0).equals("O") && tableIndex(1, 1).equals("O") && tableIndex(2, 2).equals("O")) ||
+       	    (tableIndex(0, 2).equals("O") && tableIndex(1, 1).equals("O") && tableIndex(2, 0).equals("O")) ) {
             return 1;
         }
-        else if((tableIndex(0, 0).equals("O") && tableIndex(1, 1).equals("O") && tableIndex(2, 2).equals("O")) ||
-           (tableIndex(0, 2).equals("O") && tableIndex(1, 1).equals("O") && tableIndex(2, 0).equals("O"))) {
+        else if( (tableIndex(0, 0).equals("X") && tableIndex(1, 1).equals("X") && tableIndex(2, 2).equals("X")) ||
+        	     (tableIndex(0, 2).equals("X") && tableIndex(1, 1).equals("X") && tableIndex(2, 0).equals("X")) ) {
             return -1;
         }
         
         int _XCounter = 0, _OCounter = 0;
-        
         //Horizontal Check
         for(int i=0; i<3; i++) {
             _OCounter = 0;
@@ -84,16 +93,16 @@ public class OXGame {
                 if(tableIndex(i, j).equals("X")) {
                     _XCounter++; 
                 }
-                else if(_OCounter == 3){
+                else if(tableIndex(i, j).equals("O")){
                     _OCounter++;
                 }
             }
             
             if(_OCounter == 3) {
-                return -1;
+                return 1;
             }
             else if(_XCounter == 3) {
-                return 1;
+                return -1;
             }
         }
         
@@ -105,16 +114,16 @@ public class OXGame {
                 if(tableIndex(j, i).equals("X")) {
                     _XCounter++; 
                 }
-                else if(_OCounter == 3){
+                else if(tableIndex(j, i).equals("O")){
                     _OCounter++;
                 }
             }
             
             if(_OCounter == 3) {
-                return -1;
+                return 1;
             }
             else if(_XCounter == 3) {
-                return 1;
+                return -1;
             }
         }
         

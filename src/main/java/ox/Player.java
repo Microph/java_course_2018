@@ -1,8 +1,9 @@
 package ox;
 
-public class Player {
+public abstract class Player{
     private int score = 0;
     private String playingSymbol;
+    private String name;
     
     public Player(String playingSymbol) {
         this.playingSymbol = playingSymbol;
@@ -15,4 +16,14 @@ public class Player {
     public String getPlayingSymbol() {
         return playingSymbol;
     }
+    
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+    public abstract void play(OXGame game);
 }

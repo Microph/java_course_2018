@@ -38,7 +38,7 @@ public class OXGameTest {
     public void player1_starts_game_and_play_with_X_in_0_0() {
         OXGame game = new OXGame();
         game.getTables();
-        Player player1 = new Player("X");
+        Player player1 = new HumanPlayer("X");
         game.playWith(player1, 0, 0);
         assertEquals("X", game.tableIndex(0,0));
     }
@@ -47,11 +47,11 @@ public class OXGameTest {
     public void player1_play_X_in_0_0_then_player2_play_O_in_1_0() {
         OXGame game = new OXGame();
         game.getTables();
-        Player player1 = new Player("X");
+        Player player1 = new HumanPlayer("X");
         game.playWith(player1, 0, 0);
         assertEquals("X", game.tableIndex(0,0));
         
-        Player player2 = new Player("O");
+        Player player2 = new HumanPlayer("O");
         game.playWith(player2, 1, 0);
         assertEquals("O", game.tableIndex(1,0));
     }

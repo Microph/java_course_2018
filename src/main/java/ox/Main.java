@@ -1,7 +1,5 @@
 package ox;
 
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
         startGame();
@@ -10,7 +8,6 @@ public class Main {
     private static void startGame() {
         //setup
         OXGame game = new OXGame();
-        Scanner reader = new Scanner(System.in);  // Reading from System.in
         
         //loop
         while(game.hasMovesLeft() && game.determineBoardState() == 0) {
@@ -22,7 +19,7 @@ public class Main {
                         System.out.print(" ");
                     }
                     else {
-                        System.out.print(game.tableIndex(i, j) + " ");
+                        System.out.print(game.tableIndex(i, j));
                     }
                     System.out.print("|");
                 }
@@ -30,19 +27,12 @@ public class Main {
             }
             System.out.println();
             
-            //player play
-            int row, column;
+            //playing
             if(game.getTurnOwner() == game.getPlayer1()) {
-                System.out.print("Enter row: ");
-                row = reader.nextInt();
-                System.out.print("Enter column: ");
-                column = reader.nextInt();
-                game.playWith(game.getTurnOwner(), row, column);
+            	game.getPlayer1().play(game);
             }
             else {
-                MoveIndexNode move = MinMaxOX.getNextBestMove(game);
-                game.playWith(game.getTurnOwner(), move.getRowIdx(), move.getColumnIdx());
-                System.out.println("I play at " + move.getRowIdx() + ", " + move.getColumnIdx());
+            	game.getPlayer2().play(game);
             }
             
         }
@@ -55,13 +45,24 @@ public class Main {
                     System.out.print(" ");
                 }
                 else {
-                    System.out.print(game.tableIndex(i, j) + " ");
+                    System.out.print(game.tableIndex(i, j));
                 }
                 System.out.print("|");
             }
             System.out.println();
         }
+        
+        if(game.determineBoardState() == 1)
+        {
+        	System.out.println(game.getPlayer2().getName() + " WINS");
+        }
+        else if(game.determineBoardState() == -1)
+        {
+        	System.out.println(game.getPlayer1().getName() + " WINS");
+        }
+        else {
+        	System.out.println("DRAW");
+        }
     }
-    
     
 }
