@@ -9,10 +9,10 @@ public class Main {
     	int dim = reader.nextInt();
     	System.out.print("Enter Game mode [1:PLAYER VS COM], [2:PLAYER VS PLAYER], [3:COM VS COM]: ");
     	int mode = reader.nextInt();
-    	reader.close();
         OXGame game = new OXGame(dim);
         game.setGameMode(mode);
         startGame(game);
+        reader.close();
     }
 
     private static void startGame(OXGame game) {
@@ -21,14 +21,14 @@ public class Main {
             //print table
             for(int i=0; i<game.getTableSize(); i++) {
                 for(int j=0; j<game.getTableSize(); j++) {
-                    System.out.print("|");
+                    System.out.print("[");
                     if(game.tableIndex(i, j) == "") {
                         System.out.print(" ");
                     }
                     else {
                         System.out.print(game.tableIndex(i, j));
                     }
-                    System.out.print("|");
+                    System.out.print("]");
                 }
                 System.out.println();
             }
@@ -47,14 +47,14 @@ public class Main {
         //end
         for(int i=0; i<game.getTableSize(); i++) {
             for(int j=0; j<game.getTableSize(); j++) {
-                System.out.print("|");
+                System.out.print("[");
                 if(game.tableIndex(i, j) == "") {
                     System.out.print(" ");
                 }
                 else {
                     System.out.print(game.tableIndex(i, j));
                 }
-                System.out.print("|");
+                System.out.print("]");
             }
             System.out.println();
         }

@@ -13,7 +13,7 @@ public class HumanPlayer extends Player {
 	@Override
 	public void play(OXGame game) {
 		reader = new Scanner(System.in);
-		System.out.print("It's " + getName() + " turn!\nEnter row: ");
+		System.out.print("It's " + getName() + "'s turn!\nEnter row: ");
         int row = reader.nextInt();
         System.out.print("Enter column: ");
         int column = reader.nextInt();
