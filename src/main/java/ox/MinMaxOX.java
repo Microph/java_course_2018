@@ -1,14 +1,19 @@
 package ox;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class MinMaxOX {
+    private static Map<String, Integer> memoized = new HashMap<String, Integer>();    
+    private static Random randInt = new Random();
+    
 	private static List<MoveIndexNode> getAllNextPossibleMoves(OXGame game) {
         List<MoveIndexNode> nextPossibleMoves = new ArrayList<MoveIndexNode>();
-        for(int i=0; i<3; i++) {
-            for(int j=0; j<3; j++) {
+        for(int i=0; i<game.getTableSize(); i++) {
+            for(int j=0; j<game.getTableSize(); j++) {
                 if(game.tableIndex(i, j).equals("")) {
                     MoveIndexNode newNode = new MoveIndexNode(i, j, -99);
                     nextPossibleMoves.add(newNode);
@@ -28,27 +33,26 @@ public class MinMaxOX {
         //perform MinMax for each of them and also assign score to the node
         for (MoveIndexNode moveIndexNode : allNextPossibleMoves) {
             game.playWith(game.getTurnOwner(), moveIndexNode.getRowIdx(), moveIndexNode.getColumnIdx());
-            moveIndexNode.setScore(performMinMax(game));
+            moveIndexNode.setScore(performMinMax(game, moveIndexNode.getRowIdx(), moveIndexNode.getColumnIdx()));
             
             //revert the table back
             game.playWith(game.getTurnOwner(), moveIndexNode.getRowIdx(), moveIndexNode.getColumnIdx());
-            game.getTables()[moveIndexNode.getRowIdx()][moveIndexNode.getColumnIdx()] = "";
-        }
-        
-        //keep only the moves thats has 1/-1 score...
-        List<MoveIndexNode> bestMoves = new ArrayList<MoveIndexNode>();
-        for (MoveIndexNode moveIndexNode : allNextPossibleMoves) {
-            if(moveIndexNode.getScore() == (playerSymbol == "O"? 1 : -1)) {
-                bestMoves.add(moveIndexNode);
+            game.getTable()[moveIndexNode.getRowIdx()][moveIndexNode.getColumnIdx()] = "";
+            
+            //optimize
+            if(game.getTurnOwner().getPlayingSymbol() == "O" && moveIndexNode.getScore() == 1) {
+                return moveIndexNode;
+            }
+            else if(game.getTurnOwner().getPlayingSymbol() == "X" && moveIndexNode.getScore() == -1) {
+                return moveIndexNode;
             }
         }
-        
+
         //if there are no 1s/-1s, then keep 0s
-        if(bestMoves.size() == 0) {
-            for (MoveIndexNode moveIndexNode : allNextPossibleMoves) {
-                if(moveIndexNode.getScore() == 0) {
-                    bestMoves.add(moveIndexNode);
-                }
+        List<MoveIndexNode> bestMoves = new ArrayList<MoveIndexNode>();
+        for (MoveIndexNode moveIndexNode : allNextPossibleMoves) {
+            if(moveIndexNode.getScore() == 0) {
+                bestMoves.add(moveIndexNode);
             }
         }
         
@@ -57,49 +61,74 @@ public class MinMaxOX {
         	bestMoves.add(getAllNextPossibleMoves(game).get(0));
         }
         
-        //randomly return one of those moves~
-        Random randInt = new Random();
         return bestMoves.get(randInt.nextInt(bestMoves.size()));
     }
 
-    public static int performMinMax(OXGame game) {
-        if(!game.hasMovesLeft() || evaluateTableScore(game) != 0) {
-        	return evaluateTableScore(game);
+    public static int performMinMax(OXGame game, int lastMoveRow, int lastMoveCol) {
+        String tableString = game.getTableString();
+        if(memoized.get(tableString) != null) {
+            return memoized.get(tableString);
         }
         
-        //get all next possible moves
+        int moveScore = evaluateMoveScore(game, lastMoveRow, lastMoveCol);
+        if(!game.hasMovesLeft() || moveScore != 0) {
+            memoized.put(tableString, moveScore);
+            return moveScore;
+        }
+        
         List<MoveIndexNode> allNextPossibleMoves = getAllNextPossibleMoves(game);
         
         //perform MinMax for each of them and also assign score to the node
         for (MoveIndexNode moveIndexNode : allNextPossibleMoves) {
             game.playWith(game.getTurnOwner(), moveIndexNode.getRowIdx(), moveIndexNode.getColumnIdx());
-            moveIndexNode.setScore(performMinMax(game));
+            moveIndexNode.setScore(performMinMax(game, moveIndexNode.getRowIdx(), moveIndexNode.getColumnIdx()));
             
             //revert the table back
             game.playWith(game.getTurnOwner(), moveIndexNode.getRowIdx(), moveIndexNode.getColumnIdx());
-            game.getTables()[moveIndexNode.getRowIdx()][moveIndexNode.getColumnIdx()] = "";
-        }
-
-        int desireScore;
-        //This is currently in looking ahead 1 turn, so if it's "O"'s turn then it's "X" that's thinking
-    	if(game.getTurnOwner().getPlayingSymbol() == "O") {
-    		desireScore = Integer.MIN_VALUE;
-        	for (MoveIndexNode moveIndexNode : allNextPossibleMoves) {
-        		desireScore = Math.max(desireScore, moveIndexNode.getScore());
+            game.getTable()[moveIndexNode.getRowIdx()][moveIndexNode.getColumnIdx()] = "";
+            
+            //optimize
+            if(game.getTurnOwner().getPlayingSymbol() == "O" && moveIndexNode.getScore() == 1) {
+                memoized.put(tableString, moveIndexNode.getScore());
+                return moveIndexNode.getScore();
             }
-        	return desireScore;
+            else if(game.getTurnOwner().getPlayingSymbol() == "X" && moveIndexNode.getScore() == -1) {
+                memoized.put(tableString, moveIndexNode.getScore());
+                return moveIndexNode.getScore();
+            }
+        }
+        
+        //This is currently in looking ahead 1 turn, so if it's "O"'s turn then it's "X" that's thinking
+        if(game.getTurnOwner().getPlayingSymbol() == "O") {
+            int asBestAsYouCanGet = Integer.MIN_VALUE;
+        	for (MoveIndexNode moveIndexNode : allNextPossibleMoves) {
+        	    if(moveIndexNode.getScore() == 1) {
+        	        memoized.put(tableString, moveIndexNode.getScore());
+                    return moveIndexNode.getScore();
+        	    }
+        	    asBestAsYouCanGet = Math.max(asBestAsYouCanGet, moveIndexNode.getScore());
+            }
+        	
+        	memoized.put(tableString, asBestAsYouCanGet);
+        	return asBestAsYouCanGet;
         }
         else
         {
-        	desireScore = Integer.MAX_VALUE;
-        	for (MoveIndexNode moveIndexNode : allNextPossibleMoves) {
-        		desireScore = Math.min(desireScore, moveIndexNode.getScore());
+            int asBestAsYouCanGet = Integer.MAX_VALUE;
+            for (MoveIndexNode moveIndexNode : allNextPossibleMoves) {
+                if(moveIndexNode.getScore() == -1) {
+                    memoized.put(tableString, moveIndexNode.getScore());
+                    return moveIndexNode.getScore();
+                }
+                asBestAsYouCanGet = Math.min(asBestAsYouCanGet, moveIndexNode.getScore());
             }
-            return desireScore;
+            
+            memoized.put(tableString, asBestAsYouCanGet);
+            return asBestAsYouCanGet;
         }
     }
     
-    public static int evaluateTableScore(OXGame game) {
-        return game.determineBoardState();
+    public static int evaluateMoveScore(OXGame game, int row, int col) {
+        return game.checkStateAtPoint(row, col);
     }
 }

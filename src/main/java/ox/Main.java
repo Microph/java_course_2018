@@ -2,18 +2,16 @@ package ox;
 
 public class Main {
     public static void main(String[] args) {
-        startGame();
+        OXGame game = new OXGame(4);
+        startGame(game);
     }
 
-    private static void startGame() {
-        //setup
-        OXGame game = new OXGame();
-        
+    private static void startGame(OXGame game) {
         //loop
-        while(game.hasMovesLeft() && game.determineBoardState() == 0) {
+        while(game.hasMovesLeft() && game.checkStateAtPoint(game.getLastMove().getRowIdx(), game.getLastMove().getColumnIdx()) == 0) {
             //print table
-            for(int i=0; i<3; i++) {
-                for(int j=0; j<3; j++) {
+            for(int i=0; i<game.getTableSize(); i++) {
+                for(int j=0; j<game.getTableSize(); j++) {
                     System.out.print("|");
                     if(game.tableIndex(i, j) == "") {
                         System.out.print(" ");
@@ -38,8 +36,8 @@ public class Main {
         }
         
         //end
-        for(int i=0; i<3; i++) {
-            for(int j=0; j<3; j++) {
+        for(int i=0; i<game.getTableSize(); i++) {
+            for(int j=0; j<game.getTableSize(); j++) {
                 System.out.print("|");
                 if(game.tableIndex(i, j) == "") {
                     System.out.print(" ");

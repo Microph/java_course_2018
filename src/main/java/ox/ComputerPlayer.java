@@ -9,6 +9,7 @@ public class ComputerPlayer extends Player {
 
 	@Override
 	public void play(OXGame game) {
+	    System.out.println("thinking...");
 		MoveIndexNode move = MinMaxOX.getNextBestMove(game, getPlayingSymbol());
         if(move != null){
         	game.playWith(game.getTurnOwner(), move.getRowIdx(), move.getColumnIdx());
