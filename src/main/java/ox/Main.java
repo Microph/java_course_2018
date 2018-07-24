@@ -1,8 +1,17 @@
 package ox;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        OXGame game = new OXGame(4);
+    	Scanner reader = new Scanner(System.in);
+    	System.out.print("Table dimension: ");
+    	int dim = reader.nextInt();
+    	System.out.print("Enter Game mode [1:PLAYER VS COM], [2:PLAYER VS PLAYER], [3:COM VS COM]: ");
+    	int mode = reader.nextInt();
+    	reader.close();
+        OXGame game = new OXGame(dim);
+        game.setGameMode(mode);
         startGame(game);
     }
 
@@ -50,16 +59,17 @@ public class Main {
             System.out.println();
         }
         
+        System.out.println();
         if(game.determineBoardState() == 1)
         {
-        	System.out.println(game.getPlayer2().getName() + " WINS");
+        	System.out.println(game.getPlayer2().getName() + " WINS!");
         }
         else if(game.determineBoardState() == -1)
         {
-        	System.out.println(game.getPlayer1().getName() + " WINS");
+        	System.out.println(game.getPlayer1().getName() + " WINS!");
         }
         else {
-        	System.out.println("DRAW");
+        	System.out.println("DRAW!");
         }
     }
     

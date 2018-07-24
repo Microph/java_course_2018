@@ -17,18 +17,7 @@ public class OXGame {
                 tables[i][j] = "";
             }
         }
-
-        int computerPlayerOrder = new Random().nextInt(2);
-        if(computerPlayerOrder == 1){
-            player1 = new HumanPlayer("X");
-            player2 = new ComputerPlayer("O");
-        }
-        else {
-        	player1 = new ComputerPlayer("X");
-            player2 = new HumanPlayer("O");
-        }
         
-        turnOwner = player1;
         lastMove = new MoveIndexNode(0, 0, 0);
     }
 
@@ -69,6 +58,32 @@ public class OXGame {
     
     public MoveIndexNode getLastMove() {
         return lastMove;
+    }
+    
+    public void setGameMode(int mode) {
+    	if(mode == 1) {
+    		int computerPlayerOrder = new Random().nextInt(2);
+            if(computerPlayerOrder == 1){
+                player1 = new HumanPlayer("X");
+                player2 = new ComputerPlayer("O");
+            }
+            else {
+            	player1 = new ComputerPlayer("X");
+                player2 = new HumanPlayer("O");
+            }
+    	}
+    	else if(mode == 2){
+    		player1 = new HumanPlayer("X");
+            player2 = new HumanPlayer("O");
+    	}
+    	else {
+    		player1 = new ComputerPlayer("X");
+            player2 = new ComputerPlayer("O");
+    	}
+    	
+    	player1.setName(player1.getName() + " (X)");
+    	player2.setName(player2.getName() + " (O)");
+    	turnOwner = player1;
     }
 
     public void playWith(Player player, int i, int j) {
