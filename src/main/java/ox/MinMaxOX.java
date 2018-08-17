@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class MinMaxOX {
-    private static Map<String, Integer> memoized = new HashMap<String, Integer>();    
+    public static Map<String, Integer> memoized;    
     private static Random randInt = new Random();
     
 	private static List<MoveIndexNode> getAllNextPossibleMoves(OXGame game) {
