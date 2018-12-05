@@ -10,17 +10,8 @@ public class MinMaxOX {
     private static Map<String, Integer> memoized = new HashMap<String, Integer>();    
     private static Random randInt = new Random();
     
-	private static List<MoveIndexNode> getAllNextPossibleMoves(OXGame game) {
-        List<MoveIndexNode> nextPossibleMoves = new ArrayList<MoveIndexNode>();
-        for(int i=0; i<game.getTableSize(); i++) {
-            for(int j=0; j<game.getTableSize(); j++) {
-                if(game.tableIndex(i, j).equals("")) {
-                    MoveIndexNode newNode = new MoveIndexNode(i, j, -99);
-                    nextPossibleMoves.add(newNode);
-                }
-            }
-        }
-        return nextPossibleMoves;
+	public static int evaluateMoveScore(OXGame game, int row, int col) {
+        return game.checkStateAtPoint(row, col);
     }
 	
     public static MoveIndexNode getNextBestMove(OXGame game, String playerSymbol) {
@@ -64,7 +55,7 @@ public class MinMaxOX {
         return bestMoves.get(randInt.nextInt(bestMoves.size()));
     }
 
-    public static int performMinMax(OXGame game, int lastMoveRow, int lastMoveCol) {
+    private static int performMinMax(OXGame game, int lastMoveRow, int lastMoveCol) {
         String tableString = game.getTableString();
         if(memoized.get(tableString) != null) {
             return memoized.get(tableString);
@@ -128,7 +119,16 @@ public class MinMaxOX {
         }
     }
     
-    public static int evaluateMoveScore(OXGame game, int row, int col) {
-        return game.checkStateAtPoint(row, col);
+    private static List<MoveIndexNode> getAllNextPossibleMoves(OXGame game) {
+        List<MoveIndexNode> nextPossibleMoves = new ArrayList<MoveIndexNode>();
+        for(int i=0; i<game.getTableSize(); i++) {
+            for(int j=0; j<game.getTableSize(); j++) {
+                if(game.tableIndex(i, j).equals("")) {
+                    MoveIndexNode newNode = new MoveIndexNode(i, j, -99);
+                    nextPossibleMoves.add(newNode);
+                }
+            }
+        }
+        return nextPossibleMoves;
     }
 }

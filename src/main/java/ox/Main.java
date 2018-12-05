@@ -5,11 +5,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
     	Scanner reader = new Scanner(System.in);
-    	System.out.print("Table dimension: ");
-    	int dim = reader.nextInt();
     	System.out.print("Enter Game mode [1:PLAYER VS COM], [2:PLAYER VS PLAYER], [3:COM VS COM]: ");
     	int mode = reader.nextInt();
-        OXGame game = new OXGame(dim);
+        OXGame game = new OXGame(3);
         game.setGameMode(mode);
         startGame(game);
         reader.close();

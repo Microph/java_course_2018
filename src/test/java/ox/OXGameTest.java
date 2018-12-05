@@ -27,9 +27,10 @@ public class OXGameTest {
     
     @Test
     public void newGame_has_two_players_and_zero_score() {
-        OXGame newGame = new OXGame(3);
-        Player player1 = newGame.getPlayer1();
-        Player player2 = newGame.getPlayer2();
+        OXGame game = new OXGame(3);
+        game.setGameMode(2);
+        Player player1 = game.getPlayer1();
+        Player player2 = game.getPlayer2();
         assertEquals(0, player1.getScore());
         assertEquals(0, player2.getScore());
     }
@@ -59,6 +60,7 @@ public class OXGameTest {
     @Test
     public void hasMovesLeftTest() {
         OXGame game = new OXGame(3);
+        game.setGameMode(2);
         Player player1 = game.getPlayer1();
         for(int i=0; i<3; i++) {
             for(int j=0; j<2; j++) {
@@ -72,6 +74,7 @@ public class OXGameTest {
     @Test
     public void hasNoMovesLeftTest() {
         OXGame game = new OXGame(3);
+        game.setGameMode(2);
         Player player1 = game.getPlayer1();
         for(int i=0; i<3; i++) {
             for(int j=0; j<3; j++) {
@@ -85,6 +88,7 @@ public class OXGameTest {
     @Test
     public void checkHorizontallyTest() {
         OXGame game = new OXGame(3);
+        game.setGameMode(2);
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
         /*
@@ -124,6 +128,7 @@ public class OXGameTest {
     @Test
     public void checkVerticallyTest() {
         OXGame game = new OXGame(3);
+        game.setGameMode(2);
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
         /*
@@ -163,6 +168,7 @@ public class OXGameTest {
     @Test
     public void checkDiagonally_BackSlashTest() {
         OXGame game = new OXGame(3);
+        game.setGameMode(2);
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
         /*
@@ -202,6 +208,7 @@ public class OXGameTest {
     @Test
     public void checkDiagonally_SlashTest() {
         OXGame game = new OXGame(3);
+        game.setGameMode(2);
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
         /*
@@ -241,6 +248,7 @@ public class OXGameTest {
     @Test
     public void checkDebug() {
         OXGame game = new OXGame(3);
+        game.setGameMode(2);
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
         /*
